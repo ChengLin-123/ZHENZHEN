@@ -1,172 +1,198 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>真真 - 全行业真实点评平台</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Microsoft YaHei", sans-serif;
-    }
-    body {
-      background: #f5f7fa;
-      color: #333;
-    }
-    header {
-      background: #2c3e50;
-      color: white;
-      padding: 16px 20px;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .menu a {
-      color: white;
-      margin-left: 20px;
-      text-decoration: none;
-    }
-    .banner {
-      background: #3498db;
-      color: white;
-      padding: 60px 20px;
-      text-align: center;
-    }
-    .banner h1 {
-      font-size: 32px;
-      margin-bottom: 16px;
-    }
-    .section {
-      padding: 40px 0;
-    }
-    .card-box {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-    .card-body {
-      padding: 16px;
-    }
-    .card-title {
-      font-size: 18px;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-    .star {
-      color: #f39c12;
-      margin-bottom: 8px;
-    }
-    footer {
-      background: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 24px;
-      margin-top: 40px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>真真 - 全行业真实点评平台</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui, sans-serif}
+  body{background:#f5f5f5;padding-bottom:70px}
+  .page{display:none}
+  .page.active{display:block}
+
+  /* 头部 */
+  .header{background:#d32323;color:white;padding:16px;text-align:center;font-weight:bold;font-size:18px}
+  
+  /* 首页 */
+  .search{margin:12px;padding:10px;background:white;border-radius:8px;border:1px solid #ddd}
+  .banner{background:white;margin:0 12px 12px;padding:14px;border-radius:8px}
+  .cat-scroll{display:flex;gap:12px;padding:0 12px;overflow-x:auto;margin-bottom:12px}
+  .cat{white-space:nowrap;background:white;padding:8px 14px;border-radius:20px;font-size:14px}
+  .list{padding:0 12px}
+  .item{background:white;border-radius:8px;margin-bottom:10px;padding:12px}
+  .item .title{font-weight:bold;margin-bottom:4px}
+  .item .info{color:#666;font-size:14px}
+
+  /* 分类页 */
+  .cat-box{background:white;margin:12px;border-radius:8px;padding:14px}
+  .cat-title{font-weight:bold;margin-bottom:8px}
+  .sub{display:flex;flex-wrap:wrap;gap:8px}
+  .sub span{background:#f0f0f0;padding:6px 10px;border-radius:6px}
+
+  /* 发布页 */
+  .card{background:white;margin:12px;border-radius:8px;padding:16px}
+  .card h3{margin-bottom:10px}
+  input,textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;margin-bottom:10px}
+  .btn{background:#d32323;color:white;padding:12px;border-radius:8px;text-align:center}
+
+  /* 朋友圈 */
+  .post{background:white;margin:12px;border-radius:8px;padding:14px}
+  .post .name{font-weight:bold}
+  .post .text{margin:8px 0;line-height:1.5}
+  .post .time{color:#999;font-size:12px}
+
+  /* 我的 */
+  .user-info{background:#d32323;color:white;padding:20px;text-align:center}
+  .avatar{width:60px;height:60px;background:white;border-radius:50%;margin:0 auto 10px}
+  .menu{background:white;margin:12px;border-radius:8px}
+  .menu .row{padding:14px;border-bottom:1px solid #f0f0f0}
+  .menu .row:last-child{border-bottom:none}
+
+  /* 底部导航 */
+  .nav{position:fixed;bottom:0;left:0;width:100%;height:70px;background:white;border-top:1px solid #eee;display:flex;justify-content:space-around;align-items:center}
+  .nav a{display:flex;flex-direction:column;align-items:center;font-size:12px;color:#666;text-decoration:none}
+  .nav a.active{color:#d32323}
+  .nav .icon{font-size:22px;margin-bottom:4px}
+</style>
 </head>
+
 <body>
 
-<header>
-  <div class="container nav">
-    <div class="logo">真真</div>
-    <div class="menu">
-      <a href="#">首页</a>
-      <a href="#">分类</a>
-      <a href="#">排行榜</a>
-      <a href="#">发布点评</a>
-      <a href="#">我的</a>
-    </div>
+<!-- 首页 -->
+<div class="page active" id="page-home">
+  <div class="header">真真</div>
+  <div class="search">搜索商家、评论、地点...</div>
+  <div class="banner">热门推荐 · 真实评价</div>
+  <div class="cat-scroll">
+    <div class="cat">餐饮美食</div>
+    <div class="cat">生活服务</div>
+    <div class="cat">汽车维修</div>
+    <div class="cat">农场生鲜</div>
+    <div class="cat">医疗健康</div>
   </div>
-</header>
-
-<div class="banner">
-  <div class="container">
-    <h1>全行业真实点评，只看真话</h1>
-    <p>查商家、看口碑、避坑、比价，都在真真平台</p>
-  </div>
-</div>
-
-<div class="section container">
-  <h2>热门推荐商家</h2>
-  <div class="card-box">
-    <div class="card">
-      <img src="https://picsum.photos/600/400?random=1" alt="">
-      <div class="card-body">
-        <div class="card-title">优质餐饮服务</div>
-        <div class="star">★★★★★ 4.9分</div>
-        <p>服务好、环境干净、性价比高</p>
-      </div>
+  <div class="list">
+    <div class="item">
+      <div class="title">川味家常菜馆</div>
+      <div class="info">★4.9 | 川菜 | 营业中</div>
     </div>
-    <div class="card">
-      <img src="https://picsum.photos/600/400?random=2" alt="">
-      <div class="card-body">
-        <div class="card-title">专业维修店铺</div>
-        <div class="star">★★★★☆ 4.6分</div>
-        <p>技术靠谱，收费透明，不坑人</p>
-      </div>
+    <div class="item">
+      <div class="title">诚信汽车维修</div>
+      <div class="info">★4.6 | 维修保养 | 24小时</div>
     </div>
-    <div class="card">
-      <img src="https://picsum.photos/600/400?random=3" alt="">
-      <div class="card-body">
-        <div class="card-title">农场生鲜配送</div>
-        <div class="star">★★★★★ 5.0分</div>
-        <p>新鲜直达，品质稳定，回购率高</p>
-      </div>
+    <div class="item">
+      <div class="title">农场直供生鲜</div>
+      <div class="info">★5.0 | 当日达 | 新鲜蔬菜</div>
     </div>
   </div>
 </div>
 
-<div class="section container">
-  <h2>最新真实点评</h2>
-  <div class="card-box">
-    <div class="card">
-      <div class="card-body">
-        <div class="card-title">用户：真实点评人</div>
-        <div class="star">★★★★★</div>
-        <p>这家店真的很良心，价格透明，服务到位，强烈推荐！</p>
-      </div>
+<!-- 分类 -->
+<div class="page" id="page-category">
+  <div class="header">全部分类</div>
+  <div class="cat-box">
+    <div class="cat-title">餐饮美食</div>
+    <div class="sub">
+      <span>中餐</span><span>火锅</span><span>烧烤</span><span>快餐</span><span>奶茶甜品</span>
     </div>
-    <div class="card">
-      <div class="card-body">
-        <div class="card-title">用户：理性消费者</div>
-        <div class="star">★★★☆☆</div>
-        <p>整体一般，性价比一般，不会主动推荐。</p>
-      </div>
+  </div>
+  <div class="cat-box">
+    <div class="cat-title">生活服务</div>
+    <div class="sub">
+      <span>美容美发</span><span>家政保洁</span><span>洗衣洗鞋</span><span>维修</span>
+    </div>
+  </div>
+  <div class="cat-box">
+    <div class="cat-title">汽车服务</div>
+    <div class="sub">
+      <span>维修保养</span><span>洗车美容</span><span>轮胎电瓶</span><span>道路救援</span>
+    </div>
+  </div>
+  <div class="cat-box">
+    <div class="cat-title">农场生鲜</div>
+    <div class="sub">
+      <span>蔬菜水果</span><span>肉禽蛋</span><span>粮油米面</span><span>农家特产</span>
     </div>
   </div>
 </div>
 
-<footer>
-  <div class="container">
-    <p>真真 - 全行业真实点评平台 © 2025</p>
+<!-- 发布 -->
+<div class="page" id="page-publish">
+  <div class="header">发布内容</div>
+  <div class="card">
+    <h3>发表评论</h3>
+    <input placeholder="商家名称">
+    <textarea rows="4" placeholder="写一条真实评价..."></textarea>
+    <div class="btn">提交评论</div>
   </div>
-</footer>
+  <div class="card">
+    <h3>企业/店铺入驻</h3>
+    <input placeholder="店铺名称">
+    <input placeholder="联系人">
+    <input placeholder="联系电话">
+    <textarea rows="3" placeholder="店铺简介"></textarea>
+    <div class="btn">提交入驻申请</div>
+  </div>
+</div>
+
+<!-- 朋友圈 -->
+<div class="page" id="page-moment">
+  <div class="header">朋友圈</div>
+  <div class="post">
+    <div class="name">李先生</div>
+    <div class="text">这家农场蔬菜真的新鲜，当天采摘当天送到，价格实惠！</div>
+    <div class="time">今天 10:23</div>
+  </div>
+  <div class="post">
+    <div class="name">王女士</div>
+    <div class="text">这家维修店很良心，不坑人，收费透明，强烈推荐。</div>
+    <div class="time">昨天 18:40</div>
+  </div>
+  <div class="post">
+    <div class="name">农场主刘哥</div>
+    <div class="text">今日上新：青菜、萝卜、土鸡蛋，需要的朋友可以下单～</div>
+    <div class="time">3天前</div>
+  </div>
+</div>
+
+<!-- 我的 -->
+<div class="page" id="page-mine">
+  <div class="user-info">
+    <div class="avatar"></div>
+    <div>我的账号</div>
+  </div>
+  <div class="menu">
+    <div class="row">我的评论</div>
+    <div class="row">我的收藏</div>
+    <div class="row">我的发布</div>
+    <div class="row">店铺管理</div>
+    <div class="row">消息通知</div>
+    <div class="row">设置</div>
+    <div class="row">关于真真</div>
+  </div>
+</div>
+
+<!-- 底部导航 -->
+<div class="nav">
+  <a onclick="go('home')" class="nav-item active"><div class="icon">🏠</div>首页</a>
+  <a onclick="go('category')" class="nav-item"><div class="icon">📁</div>分类</a>
+  <a onclick="go('publish')" class="nav-item"><div class="icon">➕</div>发布</a>
+  <a onclick="go('moment')" class="nav-item"><div class="icon">👥</div>朋友圈</a>
+  <a onclick="go('mine')" class="nav-item"><div class="icon">👤</div>我的</a>
+</div>
+
+<script>
+  function go(pageId) {
+    // 隐藏所有页面
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // 显示对应页面
+    document.getElementById('page-' + pageId).classList.add('active');
+    // 切换底部高亮
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.nav-item')[
+      ['home','category','publish','moment','mine'].indexOf(pageId)
+    ].classList.add('active');
+  }
+</script>
 
 </body>
 </html>
