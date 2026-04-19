@@ -10,62 +10,94 @@
   .page{display:none}
   .page.active{display:block}
 
-  .header{background:#d32323;color:white;padding:16px;text-align:center;font-weight:bold;font-size:18px;position:sticky;top:0;z-index:99}
-  
-  .search{margin:12px;padding:10px;background:white;border-radius:8px;border:1px solid #ddd}
+  /* 顶部导航 */
+  .top-bar{background:#fff;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
+  .logo{font-weight:bold;font-size:18px;color:#d32323}
+  .auth-buttons a{margin-left:12px;color:#333;text-decoration:none;font-size:14px}
+  .auth-buttons a:hover{color:#d32323}
+
+  /* 大搜索条 */
+  .search-bar{background:#fff;padding:12px}
+  .search-input{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:24px;font-size:16px}
+  .search-input:focus{outline:none;border-color:#d32323}
+
+  /* 行业图标栏 */
+  .cat-scroll{display:flex;gap:12px;padding:0 12px;overflow-x:auto;margin:12px 0}
+  .cat{white-space:nowrap;background:white;padding:8px 14px;border-radius:20px;font-size:14px;border:1px solid #eee;display:flex;align-items:center;gap:6px}
+  .cat .icon{font-size:16px}
+
   .banner{background:white;margin:0 12px 12px;padding:14px;border-radius:8px;text-align:center;color:#666}
-  .cat-scroll{display:flex;gap:12px;padding:0 12px;overflow-x:auto;margin-bottom:12px}
-  .cat{white-space:nowrap;background:white;padding:8px 14px;border-radius:20px;font-size:14px;border:1px solid #eee}
   .list{padding:0 12px}
   .item{background:white;border-radius:8px;margin-bottom:10px;padding:12px}
   .item .title{font-weight:bold;margin-bottom:4px}
   .item .info{color:#666;font-size:14px}
 
+  /* 三级分类样式 */
   .category-container{padding:0 12px}
   .cat-box{background:white;margin:12px 0;border-radius:8px;padding:14px}
-  .cat-title{font-weight:bold;margin-bottom:8px;font-size:16px;display:flex;align-items:center;gap:6px}
-  .sub{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-  .sub span{background:#f0f0f0;padding:6px 10px;border-radius:6px;font-size:14px;color:#444}
+  .cat-lv1{font-weight:bold;font-size:17px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .cat-lv2{font-weight:600;font-size:15px;color:#333;margin:10px 0 6px}
+  .cat-lv3{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+  .cat-lv3 span{background:#f0f0f0;padding:5px 9px;border-radius:6px;font-size:13px;color:#444}
 
+  /* 发布页 */
   .card{background:white;margin:12px;border-radius:8px;padding:16px}
   .card h3{margin-bottom:10px}
   input,textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;margin-bottom:10px;outline:none}
   .btn{background:#d32323;color:white;padding:12px;border-radius:8px;text-align:center;font-weight:bold}
 
+  /* 朋友圈 */
   .post{background:white;margin:12px;border-radius:8px;padding:14px}
   .post .name{font-weight:bold;margin-bottom:6px}
   .post .text{margin:8px 0;line-height:1.5;color:#333}
   .post .time{color:#999;font-size:12px}
 
+  /* 个人中心 */
   .user-info{background:#d32323;color:white;padding:20px;text-align:center}
   .avatar{width:60px;height:60px;background:white;border-radius:50%;margin:0 auto 10px}
   .menu{background:white;margin:12px;border-radius:8px}
   .menu .row{padding:14px;border-bottom:1px solid #f0f0f0}
   .menu .row:last-child{border-bottom:none}
 
+  /* 底部导航 */
   .nav{position:fixed;bottom:0;left:0;width:100%;height:70px;background:white;border-top:1px solid #eee;display:flex;justify-content:space-around;align-items:center;z-index:99}
   .nav a{display:flex;flex-direction:column;align-items:center;font-size:12px;color:#666;text-decoration:none}
   .nav a.active{color:#d32323}
   .nav .icon{font-size:22px;margin-bottom:4px}
 </style>
 </head>
-
 <body>
 
-<div class="page active" id="page-home">
-  <div class="header">真真</div>
-  <div class="search">搜索商家、评论、地点...</div>
-  <div class="banner">热门推荐 · 真实评价 · 全品类服务</div>
-  <div class="cat-scroll">
-    <div class="cat">餐饮美食</div>
-    <div class="cat">丽人时尚</div>
-    <div class="cat">休闲娱乐</div>
-    <div class="cat">亲子</div>
-    <div class="cat">结婚</div>
-    <div class="cat">酒店</div>
-    <div class="cat">购物</div>
-    <div class="cat">农场生鲜</div>
+<!-- 顶部导航 -->
+<div class="top-bar">
+  <div class="logo">真真平台</div>
+  <div class="auth-buttons">
+    <a href="#">登录</a>
+    <a href="#">注册</a>
   </div>
+</div>
+
+<!-- 首页 -->
+<div class="page active" id="page-home">
+  <!-- 大搜索条 -->
+  <div class="search-bar">
+    <input type="text" class="search-input" placeholder="搜索商家、达人攻略、服务..." />
+  </div>
+
+  <!-- 带图标的大行业栏 -->
+  <div class="cat-scroll">
+    <div class="cat"><span class="icon">🍽️</span>餐饮美食</div>
+    <div class="cat"><span class="icon">💄</span>丽人时尚</div>
+    <div class="cat"><span class="icon">🎮</span>休闲娱乐</div>
+    <div class="cat"><span class="icon">📘</span>达人宝典</div>
+    <div class="cat"><span class="icon">👶</span>亲子</div>
+    <div class="cat"><span class="icon">💍</span>结婚</div>
+    <div class="cat"><span class="icon">🏨</span>酒店</div>
+    <div class="cat"><span class="icon">🛍️</span>购物</div>
+    <div class="cat"><span class="icon">🥬</span>农场生鲜</div>
+  </div>
+
+  <div class="banner">热门推荐 · 真实评价 · 全品类服务</div>
   <div class="list">
     <div class="item">
       <div class="title">川味家常菜馆</div>
@@ -82,132 +114,560 @@
   </div>
 </div>
 
+<!-- 全部分类（三级结构 + 达人宝典 + 修理 + 菜谱） -->
 <div class="page" id="page-category">
   <div class="header">全部分类</div>
   <div class="category-container">
+
+    <!-- 达人宝典（一级分类） -->
     <div class="cat-box">
-      <div class="cat-title">🍽️ 餐饮美食</div>
-      <div class="sub">
-        <span>川菜</span><span>湘菜</span><span>粤菜</span><span>鲁菜</span><span>火锅</span><span>烧烤</span><span>西餐</span><span>日料</span><span>快餐</span><span>奶茶咖啡</span><span>甜品蛋糕</span><span>海鲜</span><span>农家菜</span>
+      <div class="cat-lv1">📘 达人宝典</div>
+
+      <div class="cat-lv2">生活攻略</div>
+      <div class="cat-lv3">
+        <span>生活小妙招</span><span>居家整理</span><span>省钱技巧</span><span>好物测评</span><span>家居布置</span>
+      </div>
+
+      <div class="cat-lv2">菜谱美食</div>
+      <div class="cat-lv3">
+        <span>家常菜</span><span>凉菜</span><span>热菜</span><span>煲汤</span><span>烘焙</span><span>小吃</span><span>预制菜</span><span>酱料配方</span>
+      </div>
+
+      <div class="cat-lv2">修理技巧</div>
+      <div class="cat-lv3">
+        <span>家电修理</span><span>水管维修</span><span>电路维修</span><span>家具维修</span><span>农机维修</span><span>电动车维修</span><span>工具使用</span>
+      </div>
+
+      <div class="cat-lv2">生产种养</div>
+      <div class="cat-lv3">
+        <span>种植技术</span><span>养殖经验</span><span>大棚管理</span><span>农机使用</span><span>有机农业</span><span>农场运营</span>
+      </div>
+
+      <div class="cat-lv2">医疗健康</div>
+      <div class="cat-lv3">
+        <span>常见病护理</span><span>体检指南</span><span>用药常识</span><span>康复锻炼</span><span>养生保健</span><span>中医调理</span>
+      </div>
+
+      <div class="cat-lv2">旅游出行</div>
+      <div class="cat-lv3">
+        <span>旅行攻略</span><span>景点避坑</span><span>自驾路线</span><span>签证入境</span><span>住宿推荐</span><span>本地游玩</span>
+      </div>
+
+      <div class="cat-lv2">学习提升</div>
+      <div class="cat-lv3">
+        <span>考证考级</span><span>语言学习</span><span>职场技能</span><span>兴趣自学</span><span>读书分享</span><span>资料整理</span>
+      </div>
+
+      <div class="cat-lv2">职场创业</div>
+      <div class="cat-lv3">
+        <span>求职简历</span><span>职场晋升</span><span>副业赚钱</span><span>开店经验</span><span>电商运营</span><span>项目管理</span>
+      </div>
+
+      <div class="cat-lv2">美食探店</div>
+      <div class="cat-lv3">
+        <span>餐厅测评</span><span>小吃打卡</span><span>食材评测</span>
+      </div>
+
+      <div class="cat-lv2">美妆穿搭</div>
+      <div class="cat-lv3">
+        <span>护肤攻略</span><span>彩妆教程</span><span>发型打理</span><span>穿搭技巧</span><span>饰品搭配</span>
+      </div>
+
+      <div class="cat-lv2">育儿养老</div>
+      <div class="cat-lv3">
+        <span>孕产护理</span><span>宝宝喂养</span><span>早教启蒙</span><span>老人照护</span><span>慢病管理</span>
+      </div>
+
+      <div class="cat-lv2">汽车数码</div>
+      <div class="cat-lv3">
+        <span>用车养车</span><span>二手车避坑</span><span>手机评测</span><span>数码选购</span><span>家电使用</span>
+      </div>
+
+      <div class="cat-lv2">情感心理</div>
+      <div class="cat-lv3">
+        <span>情绪管理</span><span>人际关系</span><span>婚恋相处</span><span>亲子沟通</span><span>压力调节</span>
+      </div>
+
+      <div class="cat-lv2">法律金融</div>
+      <div class="cat-lv3">
+        <span>法律常识</span><span>社保公积金</span><span>理财入门</span><span>保险配置</span><span>信贷避坑</span>
       </div>
     </div>
+
+    <!-- 1. 餐饮美食 -->
     <div class="cat-box">
-      <div class="cat-title">💄 丽人时尚</div>
-      <div class="sub">
-        <span>美发</span><span>美容SPA</span><span>美甲美睫</span><span>医美</span><span>服饰</span><span>珠宝</span><span>眼镜</span>
+      <div class="cat-lv1">🍽️ 餐饮美食</div>
+
+      <div class="cat-lv2">中餐</div>
+      <div class="cat-lv3">
+        <span>川菜</span><span>湘菜</span><span>粤菜</span><span>鲁菜</span><span>江浙菜</span><span>东北菜</span><span>西北菜</span><span>闽菜</span><span>徽菜</span><span>赣菜</span><span>家常菜</span><span>私房菜</span>
+      </div>
+
+      <div class="cat-lv2">火锅</div>
+      <div class="cat-lv3">
+        <span>川味火锅</span><span>潮汕牛肉锅</span><span>猪肚鸡</span><span>寿喜烧</span><span>羊蝎子</span><span>鱼火锅</span><span>菌汤火锅</span><span>冒菜麻辣烫</span>
+      </div>
+
+      <div class="cat-lv2">烧烤烤串</div>
+      <div class="cat-lv3">
+        <span>烧烤</span><span>烤串</span><span>韩式烤肉</span><span>日式烧肉</span><span>铁板烧</span><span>烤羊腿</span><span>烤海鲜</span>
+      </div>
+
+      <div class="cat-lv2">西餐日料东南亚</div>
+      <div class="cat-lv3">
+        <span>牛排</span><span>披萨</span><span>意面</span><span>寿司</span><span>刺身</span><span>居酒屋</span><span>韩餐</span><span>泰餐</span><span>越南菜</span><span>法餐</span>
+      </div>
+
+      <div class="cat-lv2">快餐简餐</div>
+      <div class="cat-lv3">
+        <span>汉堡炸鸡</span><span>中式简餐</span><span>粥粉面</span><span>馄饨饺子</span><span>轻食沙拉</span><span>素食</span><span>自助餐</span>
+      </div>
+
+      <div class="cat-lv2">饮品甜品</div>
+      <div class="cat-lv3">
+        <span>咖啡</span><span>奶茶</span><span>果汁</span><span>酸奶</span><span>冰淇淋</span><span>蛋糕</span><span>面包烘焙</span><span>茶馆</span>
+      </div>
+
+      <div class="cat-lv2">海鲜特色</div>
+      <div class="cat-lv3">
+        <span>海鲜大排档</span><span>蒸汽海鲜</span><span>鱼鲜店</span><span>老字号</span><span>小吃</span><span>夜市</span><span>农家菜</span><span>清真菜</span>
       </div>
     </div>
+
+    <!-- 2. 丽人时尚 -->
     <div class="cat-box">
-      <div class="cat-title">🎮 休闲娱乐</div>
-      <div class="sub">
-        <span>KTV</span><span>按摩足疗</span><span>汗蒸</span><span>健身</span><span>密室剧本杀</span><span>网咖</span><span>台球</span>
+      <div class="cat-lv1">💄 丽人时尚</div>
+
+      <div class="cat-lv2">美发</div>
+      <div class="cat-lv3">
+        <span>剪发</span><span>烫发</span><span>染发</span><span>接发</span><span>养发</span><span>头皮护理</span>
+      </div>
+
+      <div class="cat-lv2">美容SPA</div>
+      <div class="cat-lv3">
+        <span>面部护肤</span><span>补水保湿</span><span>祛痘祛斑</span><span>抗衰紧致</span><span>脱毛</span><span>SPA</span><span>汗蒸汤泉</span>
+      </div>
+
+      <div class="cat-lv2">美甲美睫</div>
+      <div class="cat-lv3">
+        <span>美甲</span><span>美睫</span><span>纹绣</span><span>化妆造型</span>
+      </div>
+
+      <div class="cat-lv2">医美</div>
+      <div class="cat-lv3">
+        <span>整形</span><span>微整形</span><span>皮肤管理</span><span>光子嫩肤</span><span>水光针</span><span>植发</span>
+      </div>
+
+      <div class="cat-lv2">服饰鞋包</div>
+      <div class="cat-lv3">
+        <span>女装</span><span>男装</span><span>童装</span><span>内衣</span><span>鞋靴</span><span>箱包</span><span>配饰</span>
+      </div>
+
+      <div class="cat-lv2">珠宝眼镜</div>
+      <div class="cat-lv3">
+        <span>黄金珠宝</span><span>银饰</span><span>钻石</span><span>手表</span><span>眼镜</span><span>验光配镜</span>
       </div>
     </div>
+
+    <!-- 3. 休闲娱乐 -->
     <div class="cat-box">
-      <div class="cat-title">👶 亲子</div>
-      <div class="sub">
-        <span>儿童乐园</span><span>早教</span><span>亲子摄影</span><span>月子中心</span><span>亲子餐厅</span>
+      <div class="cat-lv1">🎮 休闲娱乐</div>
+
+      <div class="cat-lv2">KTV</div>
+      <div class="cat-lv3">
+        <span>量贩KTV</span><span>主题KTV</span><span>商务KTV</span>
+      </div>
+
+      <div class="cat-lv2">按摩足疗</div>
+      <div class="cat-lv3">
+        <span>足疗</span><span>推拿</span><span>艾灸</span><span>拔罐</span><span>刮痧</span><span>采耳</span>
+      </div>
+
+      <div class="cat-lv2">洗浴汗蒸</div>
+      <div class="cat-lv3">
+        <span>温泉</span><span>汗蒸</span><span>汤泉</span><span>洗浴</span><span>桑拿</span>
+      </div>
+
+      <div class="cat-lv2">运动健身</div>
+      <div class="cat-lv3">
+        <span>健身房</span><span>瑜伽</span><span>舞蹈</span><span>游泳</span><span>球类</span><span>射箭</span><span>攀岩</span><span>滑雪</span>
+      </div>
+
+      <div class="cat-lv2">桌游密室</div>
+      <div class="cat-lv3">
+        <span>密室逃脱</span><span>剧本杀</span><span>桌游吧</span><span>轰趴馆</span>
+      </div>
+
+      <div class="cat-lv2">其他娱乐</div>
+      <div class="cat-lv3">
+        <span>网咖</span><span>台球</span><span>棋牌室</span><span>电玩城</span><span>手工坊</span><span>清吧</span>
       </div>
     </div>
+
+    <!-- 4. 亲子 -->
     <div class="cat-box">
-      <div class="cat-title">💍 结婚</div>
-      <div class="sub">
-        <span>婚纱摄影</span><span>婚庆策划</span><span>婚宴酒店</span><span>婚车租赁</span>
+      <div class="cat-lv1">👶 亲子</div>
+
+      <div class="cat-lv2">亲子游乐</div>
+      <div class="cat-lv3">
+        <span>儿童乐园</span><span>淘气堡</span><span>亲子农场</span><span>动物园</span><span>海洋馆</span><span>主题公园</span>
+      </div>
+
+      <div class="cat-lv2">亲子教育</div>
+      <div class="cat-lv3">
+        <span>早教</span><span>少儿英语</span><span>艺术培训</span><span>少儿运动</span><span>专注力训练</span>
+      </div>
+
+      <div class="cat-lv2">亲子服务</div>
+      <div class="cat-lv3">
+        <span>儿童摄影</span><span>婴儿游泳</span><span>母婴护理</span><span>产后修复</span><span>亲子餐厅</span>
+      </div>
+
+      <div class="cat-lv2">孕产服务</div>
+      <div class="cat-lv3">
+        <span>月子中心</span><span>月嫂</span><span>孕妇摄影</span><span>胎教</span>
       </div>
     </div>
+
+    <!-- 5. 结婚 -->
     <div class="cat-box">
-      <div class="cat-title">🏨 酒店</div>
-      <div class="sub">
-        <span>高端酒店</span><span>快捷酒店</span><span>民宿</span><span>青旅</span>
+      <div class="cat-lv1">💍 结婚</div>
+
+      <div class="cat-lv2">婚纱摄影</div>
+      <div class="cat-lv3">
+        <span>婚纱影楼</span><span>写真</span><span>旅拍</span>
+      </div>
+
+      <div class="cat-lv2">婚礼策划</div>
+      <div class="cat-lv3">
+        <span>婚庆公司</span><span>婚礼布置</span><span>司仪</span><span>跟妆</span><span>跟拍</span>
+      </div>
+
+      <div class="cat-lv2">婚宴场地</div>
+      <div class="cat-lv3">
+        <span>婚宴酒店</span><span>婚礼会所</span><span>一站式婚礼</span>
+      </div>
+
+      <div class="cat-lv2">婚品服务</div>
+      <div class="cat-lv3">
+        <span>婚纱礼服</span><span>喜糖喜酒</span><span>钻戒</span><span>婚车租赁</span>
       </div>
     </div>
+
+    <!-- 6. 酒店 -->
     <div class="cat-box">
-      <div class="cat-title">🌿 景点/周边游</div>
-      <div class="sub">
-        <span>自然风光</span><span>主题乐园</span><span>农家乐</span><span>露营</span><span>旅行社</span>
+      <div class="cat-lv1">🏨 酒店</div>
+
+      <div class="cat-lv2">高端酒店</div>
+      <div class="cat-lv3">
+        <span>五星</span><span>四星</span><span>精品</span><span>主题酒店</span>
+      </div>
+
+      <div class="cat-lv2">经济型住宿</div>
+      <div class="cat-lv3">
+        <span>快捷酒店</span><span>民宿</span><span>客栈</span><span>青旅</span><span>短租公寓</span>
       </div>
     </div>
+
+    <!-- 7. 景点/周边游 -->
     <div class="cat-box">
-      <div class="cat-title">🎬 电影/演出/赛事</div>
-      <div class="sub">
-        <span>电影院</span><span>演唱会</span><span>话剧</span><span>体育赛事</span>
+      <div class="cat-lv1">🌿 景点/周边游</div>
+
+      <div class="cat-lv2">景点游玩</div>
+      <div class="cat-lv3">
+        <span>城市景点</span><span>自然风光</span><span>古镇</span><span>主题乐园</span><span>温泉滑雪</span><span>农家乐</span><span>露营</span>
+      </div>
+
+      <div class="cat-lv2">旅游服务</div>
+      <div class="cat-lv3">
+        <span>旅行社</span><span>导游</span><span>签证</span><span>租车</span><span>团建</span>
       </div>
     </div>
+
+    <!-- 8. 电影/演出/赛事 -->
     <div class="cat-box">
-      <div class="cat-title">🛍️ 购物</div>
-      <div class="sub">
-        <span>商场</span><span>超市</span><span>美妆</span><span>数码</span><span>家居</span><span>母婴</span>
+      <div class="cat-lv1">🎬 电影/演出/赛事</div>
+
+      <div class="cat-lv2">电影</div>
+      <div class="cat-lv3">
+        <span>电影院</span><span>影城</span><span>私人影院</span>
+      </div>
+
+      <div class="cat-lv2">演出</div>
+      <div class="cat-lv3">
+        <span>演唱会</span><span>话剧</span><span>音乐会</span><span>相声</span><span>儿童剧</span>
+      </div>
+
+      <div class="cat-lv2">赛事场馆</div>
+      <div class="cat-lv3">
+        <span>体育赛事</span><span>电竞</span><span>博物馆</span><span>美术馆</span><span>科技馆</span>
       </div>
     </div>
+
+    <!-- 9. 购物 -->
     <div class="cat-box">
-      <div class="cat-title">📚 教育培训</div>
-      <div class="sub">
-        <span>学科辅导</span><span>语言培训</span><span>职业技能</span><span>兴趣培训</span><span>驾校</span>
+      <div class="cat-lv1">🛍️ 购物</div>
+
+      <div class="cat-lv2">综合商超</div>
+      <div class="cat-lv3">
+        <span>商场</span><span>百货</span><span>超市</span><span>便利店</span>
+      </div>
+
+      <div class="cat-lv2">品类购物</div>
+      <div class="cat-lv3">
+        <span>美妆</span><span>数码</span><span>家电</span><span>家居</span><span>食品生鲜</span><span>母婴</span>
+      </div>
+
+      <div class="cat-lv2">特色购物</div>
+      <div class="cat-lv3">
+        <span>书店</span><span>花店</span><span>珠宝</span><span>奢侈品</span>
       </div>
     </div>
+
+    <!-- 10. 教育培训 -->
     <div class="cat-box">
-      <div class="cat-title">🏥 医疗健康</div>
-      <div class="sub">
-        <span>医院</span><span>体检</span><span>药店</span><span>口腔</span><span>心理咨询</span>
+      <div class="cat-lv1">📚 教育培训</div>
+
+      <div class="cat-lv2">学科辅导</div>
+      <div class="cat-lv3">
+        <span>中小学辅导</span><span>艺考</span>
+      </div>
+
+      <div class="cat-lv2">语言培训</div>
+      <div class="cat-lv3">
+        <span>英语</span><span>日语</span><span>韩语</span><span>小语种</span>
+      </div>
+
+      <div class="cat-lv2">职业技能</div>
+      <div class="cat-lv3">
+        <span>IT</span><span>会计</span><span>设计</span><span>汽修</span><span>厨师</span><span>家政</span>
+      </div>
+
+      <div class="cat-lv2">兴趣学历</div>
+      <div class="cat-lv3">
+        <span>音乐美术</span><span>舞蹈</span><span>成人高考</span><span>考研</span><span>留学</span>
+      </div>
+
+      <div class="cat-lv2">驾考</div>
+      <div class="cat-lv3">
+        <span>驾校</span><span>汽车陪练</span>
       </div>
     </div>
+
+    <!-- 11. 医疗健康 -->
     <div class="cat-box">
-      <div class="cat-title">🐱 宠物服务</div>
-      <div class="sub">
-        <span>宠物医院</span><span>宠物美容</span><span>宠物用品</span><span>寄养训练</span>
+      <div class="cat-lv1">🏥 医疗健康</div>
+
+      <div class="cat-lv2">医疗机构</div>
+      <div class="cat-lv3">
+        <span>综合医院</span><span>专科医院</span><span>口腔诊所</span><span>中医馆</span><span>社区诊所</span>
+      </div>
+
+      <div class="cat-lv2">健康服务</div>
+      <div class="cat-lv3">
+        <span>体检中心</span><span>药店</span><span>保健品</span><span>医疗器械</span><span>滋补品</span>
+      </div>
+
+      <div class="cat-lv2">健康管理</div>
+      <div class="cat-lv3">
+        <span>心理咨询</span><span>理疗推拿</span><span>医美抗衰</span><span>植发养发</span>
       </div>
     </div>
+
+    <!-- 12. 宠物服务 -->
     <div class="cat-box">
-      <div class="cat-title">🏠 家居家装</div>
-      <div class="sub">
-        <span>装修设计</span><span>建材</span><span>家具</span><span>家电维修</span>
+      <div class="cat-lv1">🐱 宠物服务</div>
+
+      <div class="cat-lv2">宠物医疗</div>
+      <div class="cat-lv3">
+        <span>宠物医院</span><span>疫苗接种</span><span>绝育手术</span><span>健康体检</span>
+      </div>
+
+      <div class="cat-lv2">宠物护理</div>
+      <div class="cat-lv3">
+        <span>美容洗澡</span><span>SPA护理</span><span>寄养托管</span><span>行为训练</span>
+      </div>
+
+      <div class="cat-lv2">宠物用品</div>
+      <div class="cat-lv3">
+        <span>宠物食品</span><span>玩具用品</span><span>窝笼垫料</span><span>服饰配饰</span>
+      </div>
+
+      <div class="cat-lv2">宠物其他</div>
+      <div class="cat-lv3">
+        <span>宠物殡葬</span><span>宠物乐园</span>
       </div>
     </div>
+
+    <!-- 13. 家居家装 -->
     <div class="cat-box">
-      <div class="cat-title">🛠️ 生活服务</div>
-      <div class="sub">
-        <span>家政保洁</span><span>家电维修</span><span>洗衣洗鞋</span><span>开锁疏通</span><span>鲜花礼品</span>
+      <div class="cat-lv1">🏠 家居家装</div>
+
+      <div class="cat-lv2">装修设计</div>
+      <div class="cat-lv3">
+        <span>家装设计</span><span>工装设计</span><span>新房装修</span><span>旧房改造</span>
+      </div>
+
+      <div class="cat-lv2">建材家具</div>
+      <div class="cat-lv3">
+        <span>瓷砖地板</span><span>卫浴洁具</span><span>橱柜灯具</span><span>定制家具</span><span>智能家居</span>
+      </div>
+
+      <div class="cat-lv2">家电服务</div>
+      <div class="cat-lv3">
+        <span>家电销售</span><span>安装服务</span><span>维修清洗</span>
       </div>
     </div>
+
+    <!-- 14. 生活服务 -->
     <div class="cat-box">
-      <div class="cat-title">🚗 汽车服务</div>
-      <div class="sub">
-        <span>维修保养</span><span>洗车美容</span><span>二手车</span><span>驾校</span><span>道路救援</span>
+      <div class="cat-lv1">🛠️ 生活服务</div>
+
+      <div class="cat-lv2">家政保洁</div>
+      <div class="cat-lv3">
+        <span>日常保洁</span><span>开荒保洁</span><span>钟点工</span><span>保姆月嫂</span><span>育儿嫂</span>
+      </div>
+
+      <div class="cat-lv2">维修服务</div>
+      <div class="cat-lv3">
+        <span>家电维修</span><span>手机维修</span><span>管道疏通</span><span>开锁换锁</span><span>水电维修</span>
+      </div>
+
+      <div class="cat-lv2">洗护图文</div>
+      <div class="cat-lv3">
+        <span>洗衣洗鞋</span><span>干洗护理</span><span>证件快照</span><span>打印复印</span><span>鲜花礼品</span>
       </div>
     </div>
+
+    <!-- 15. 汽车服务 -->
     <div class="cat-box">
-      <div class="cat-title">🏗️ 本地服务</div>
-      <div class="sub">
-        <span>装修改造</span><span>水电暖通</span><span>除虫灭鼠</span><span>安防安装</span>
+      <div class="cat-lv1">🚗 汽车服务</div>
+
+      <div class="cat-lv2">维修保养</div>
+      <div class="cat-lv3">
+        <span>汽车维修</span><span>保养换油</span><span>轮胎轮毂</span><span>电瓶电路</span><span>四轮定位</span>
+      </div>
+
+      <div class="cat-lv2">美容改装</div>
+      <div class="cat-lv3">
+        <span>洗车打蜡</span><span>贴膜镀膜</span><span>内饰清洁</span><span>改装升级</span>
+      </div>
+
+      <div class="cat-lv2">二手车租车</div>
+      <div class="cat-lv3">
+        <span>二手车买卖</span><span>汽车租赁</span><span>豪车租赁</span>
+      </div>
+
+      <div class="cat-lv2">汽车配套</div>
+      <div class="cat-lv3">
+        <span>汽车用品</span><span>驾校练车</span><span>道路救援</span><span>加油站</span><span>充电桩</span>
       </div>
     </div>
+
+    <!-- 16. 本地服务 -->
     <div class="cat-box">
-      <div class="cat-title">📋 专业服务</div>
-      <div class="sub">
-        <span>法律服务</span><span>财务代账</span><span>商务服务</span><span>翻译</span>
+      <div class="cat-lv1">🏗️ 本地服务</div>
+
+      <div class="cat-lv2">装修改造</div>
+      <div class="cat-lv3">
+        <span>室内装修</span><span>庭院景观</span><span>防水补漏</span>
+      </div>
+
+      <div class="cat-lv2">水电安防</div>
+      <div class="cat-lv3">
+        <span>空调维修</span><span>暖气安装</span><span>监控门禁</span><span>防盗报警</span>
+      </div>
+
+      <div class="cat-lv2">害虫防治</div>
+      <div class="cat-lv3">
+        <span>除虫灭鼠</span><span>白蚁防治</span><span>消毒杀菌</span>
       </div>
     </div>
+
+    <!-- 17. 专业服务 -->
     <div class="cat-box">
-      <div class="cat-title">💰 金融服务</div>
-      <div class="sub">
-        <span>银行</span><span>保险</span><span>理财</span><span>贷款</span>
+      <div class="cat-lv1">📋 专业服务</div>
+
+      <div class="cat-lv2">法律服务</div>
+      <div class="cat-lv3">
+        <span>律师事务所</span><span>法律咨询</span><span>合同审核</span><span>知识产权</span>
+      </div>
+
+      <div class="cat-lv2">财务税务</div>
+      <div class="cat-lv3">
+        <span>代账记账</span><span>税务筹划</span><span>审计验资</span><span>工商注册</span>
+      </div>
+
+      <div class="cat-lv2">商务服务</div>
+      <div class="cat-lv3">
+        <span>广告印刷</span><span>翻译服务</span><span>办公租赁</span><span>会展活动</span>
       </div>
     </div>
+
+    <!-- 18. 金融服务 -->
     <div class="cat-box">
-      <div class="cat-title">🥬 农场生鲜</div>
-      <div class="sub">
-        <span>蔬菜水果</span><span>肉禽蛋奶</span><span>水产海鲜</span><span>粮油米面</span><span>农家特产</span>
+      <div class="cat-lv1">💰 金融服务</div>
+
+      <div class="cat-lv2">银行服务</div>
+      <div class="cat-lv3">
+        <span>银行网点</span><span>ATM机</span><span>外汇兑换</span>
+      </div>
+
+      <div class="cat-lv2">保险理财</div>
+      <div class="cat-lv3">
+        <span>人寿保险</span><span>汽车保险</span><span>健康保险</span><span>理财投资</span><span>证券基金</span>
+      </div>
+
+      <div class="cat-lv2">贷款典当</div>
+      <div class="cat-lv3">
+        <span>房屋贷款</span><span>汽车贷款</span><span>信用贷款</span><span>典当抵押</span>
       </div>
     </div>
+
+    <!-- 19. 农场生鲜 -->
     <div class="cat-box">
-      <div class="cat-title">🌃 夜生活</div>
-      <div class="sub">
-        <span>酒吧</span><span>清吧</span><span>深夜食堂</span><span>夜间娱乐</span>
+      <div class="cat-lv1">🥬 农场生鲜</div>
+
+      <div class="cat-lv2">蔬菜水果</div>
+      <div class="cat-lv3">
+        <span>时令蔬菜</span><span>应季水果</span><span>有机果蔬</span><span>菌菇干货</span>
+      </div>
+
+      <div class="cat-lv2">肉禽蛋奶</div>
+      <div class="cat-lv3">
+        <span>猪肉</span><span>牛肉</span><span>羊肉</span><span>鸡鸭鹅肉</span><span>土鸡蛋</span><span>乳制品</span>
+      </div>
+
+      <div class="cat-lv2">水产海鲜</div>
+      <div class="cat-lv3">
+        <span>淡水鱼类</span><span>虾蟹贝类</span><span>冻品海鲜</span><span>海产干货</span>
+      </div>
+
+      <div class="cat-lv2">粮油特产</div>
+      <div class="cat-lv3">
+        <span>米面粮油</span><span>杂粮粗粮</span><span>调味品</span><span>农家特产</span><span>土蜂蜜</span>
       </div>
     </div>
+
+    <!-- 20. 夜生活 -->
+    <div class="cat-box">
+      <div class="cat-lv1">🌃 夜生活</div>
+
+      <div class="cat-lv2">酒吧休闲</div>
+      <div class="cat-lv3">
+        <span>清吧静吧</span><span>夜店迪吧</span><span>Livehouse</span><span>鸡尾酒吧</span>
+      </div>
+
+      <div class="cat-lv2">夜间服务</div>
+      <div class="cat-lv3">
+        <span>深夜食堂</span><span>24小时便利店</span><span>夜间健身</span>
+      </div>
+    </div>
+
   </div>
 </div>
 
+<!-- 发布页 -->
 <div class="page" id="page-publish">
   <div class="header">发布内容</div>
   <div class="card">
@@ -226,6 +686,7 @@
   </div>
 </div>
 
+<!-- 朋友圈 -->
 <div class="page" id="page-moment">
   <div class="header">朋友圈</div>
   <div class="post">
@@ -245,7 +706,9 @@
   </div>
 </div>
 
+<!-- 个人中心 -->
 <div class="page" id="page-mine">
+  <div class="header">我的</div>
   <div class="user-info">
     <div class="avatar"></div>
     <div>我的账号</div>
@@ -261,6 +724,7 @@
   </div>
 </div>
 
+<!-- 底部导航 -->
 <div class="nav">
   <a onclick="goPage('home')" class="nav-item active"><div class="icon">🏠</div>首页</a>
   <a onclick="goPage('category')" class="nav-item"><div class="icon">📁</div>分类</a>
@@ -274,10 +738,9 @@
     document.querySelectorAll('.page').forEach(item => item.classList.remove('active'));
     document.getElementById('page-' + pageId).classList.add('active');
     document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-    let index = ['home','category','publish','moment','mine'].indexOf(pageId);
-    document.querySelectorAll('.nav-item')[index].classList.add('active');
+    let idx = ['home','category','publish','moment','mine'].indexOf(pageId);
+    document.querySelectorAll('.nav-item')[idx].classList.add('active');
   }
 </script>
-
 </body>
 </html>
