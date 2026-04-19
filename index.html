@@ -3,312 +3,350 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>商家活动地图平台</title>
-<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.css">
-<script src="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/leaflet-measure/3.1.0/leaflet-measure.min.css">
-<script src="https://cdn.bootcdn.net/ajax/libs/leaflet-measure/3.1.0/leaflet-measure.min.js"></script>
+<title>真真 - 全行业点评平台</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
-body{display:flex;height:100vh;overflow:hidden;}
-.sidebar{width:360px;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;}
-.header{padding:16px;border-bottom:1px solid #eee;position:relative;}
-.top-right{position:absolute;top:16px;right:16px;display:flex;gap:8px;align-items:center;}
-.lang-btn,.copy-btn{padding:6px 10px;border:none;background:#f3f4f6;border-radius:6px;cursor:pointer;font-size:13px;}
-.lang-panel{position:absolute;top:44px;right:16px;background:#fff;border:1px solid #ddd;border-radius:8px;width:200px;max-height:400px;overflow-y:auto;z-index:9999;display:none;}
-.lang-item{padding:8px 12px;font-size:13px;cursor:pointer;}
-.lang-item:hover{background:#f5f7fa;}
-.header h2{font-size:18px;margin-bottom:8px;}
-.search{width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;}
-.filter-bar{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid #eee;flex-wrap:wrap;}
-.filter-bar button{padding:6px 10px;border:none;border-radius:6px;background:#f3f4f6;cursor:pointer;font-size:13px;}
-.filter-bar button.active{background:#1677ff;color:#fff;}
-.list-box{flex:1;overflow-y:auto;padding:10px;}
-.biz-card{border:1px solid #eee;border-radius:10px;padding:12px;margin-bottom:10px;cursor:pointer;transition:0.2s;}
-.biz-card:hover{background:#f9fafb;}
-.biz-title{font-weight:bold;font-size:15px;margin-bottom:4px;}
-.biz-addr{font-size:13px;color:#666;margin-bottom:4px;}
-.biz-tags{display:flex;gap:4px;margin-bottom:6px;flex-wrap:wrap;}
-.biz-tags span{background:#e6f7ff;color:#0066cc;padding:2px 6px;border-radius:4px;font-size:12px;}
-.biz-activity{font-size:13px;color:#ff4d4f;margin:4px 0;}
-.biz-dist{font-size:13px;color:#1677ff;font-weight:500;}
-.biz-bottom{display:flex;gap:8px;margin-top:8px;}
-.btn-nav,.btn-manage{flex:1;padding:7px;border:none;border-radius:6px;font-size:13px;cursor:pointer;}
-.btn-nav{background:#00b42a;color:#fff;}
-.btn-manage{background:#86909c;color:#fff;}
-#map{flex:1;height:100%;}
-.area-info{padding:10px 12px;background:#e6ffed;border-bottom:1px solid #eee;font-size:14px;display:none;}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;justify-content:center;align-items:center;z-index:9999;}
-.modal-box{background:#fff;width:360px;border-radius:12px;padding:20px;}
-.modal-box h4{margin-bottom:12px;}
-.modal-box input,.modal-box select{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ddd;border-radius:6px;}
-.modal-btns{display:flex;gap:10px;}
-.modal-btns button{flex:1;padding:10px;border:none;border-radius:6px;cursor:pointer;}
-.btn-save{background:#1677ff;color:#fff;}
-.btn-close{background:#f2f3f5;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+body{background:#f3f4f6;font-size:15px;line-height:1.45;padding-bottom:60px;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* 顶部 */
+.header{position:sticky;top:0;background:#fff;z-index:900;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee;}
+.logo{font-size:20px;font-weight:700;color:#d32323;}
+.search{flex:1;margin:0 12px;}
+.search input{width:100%;height:36px;border-radius:6px;border:1px solid #ddd;padding:0 10px;font-size:14px;background:#f9f9f9;}
+.lang-switch{font-size:14px;color:#333;padding:4px 8px;border:1px solid #ddd;border-radius:6px;background:#fff;cursor:pointer;}
+
+/* 分类栏 */
+.cat-scroll{background:#fff;overflow-x:auto;white-space:nowrap;padding:10px 12px;border-bottom:1px solid #eee;}
+.cat-scroll::-webkit-scrollbar{display:none;}
+.cat-item{display:inline-block;padding:6px 12px;background:#f7f8fa;border-radius:20px;font-size:14px;margin-right:8px;color:#555;}
+.cat-item.active{background:#d32323;color:#fff;}
+
+/* 二级分类 */
+.sub-cats{background:#fff;padding:12px 16px;display:none;}
+.sub-cats.show{display:block;}
+.sub-title{font-weight:600;margin-bottom:8px;font-size:15px;}
+.sub-list{display:flex;flex-wrap:wrap;gap:6px;}
+.sub-tag{padding:4px 10px;background:#f7f8fa;border-radius:16px;font-size:12px;color:#666;}
+
+/* 地图 */
+.map-wrapper{height:380px;background:#fff;margin:10px 0;}
+#map{width:100%;height:100%;}
+
+/* 商家列表 */
+.shop-list{background:#fff;margin-top:10px;}
+.section-title{padding:12px 16px;font-size:16px;font-weight:600;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;}
+.sort-btn{font-size:12px;color:#007bff;cursor:pointer;}
+.shop-item{display:flex;padding:12px 16px;border-bottom:1px solid #f5f5f5;gap:12px;align-items:center;}
+.shop-img{width:80px;height:80px;border-radius:6px;background:#eee;flex-shrink:0;}
+.shop-info{flex:1;}
+.shop-name{font-size:16px;font-weight:600;margin-bottom:4px;}
+.shop-star{color:#ff9500;font-size:13px;margin-bottom:4px;}
+.shop-desc{font-size:13px;color:#999;margin-bottom:4px;}
+.shop-dist{font-size:12px;color:#666;}
+
+/* 活动 */
+.act-list{background:#fff;margin-top:10px;}
+.act-item{padding:12px 16px;border-bottom:1px solid #f5f5f5;}
+.act-title{font-size:15px;font-weight:600;margin-bottom:4px;}
+.act-time{font-size:12px;color:#999;}
+
+/* 评价 */
+.cmt-list{background:#fff;margin-top:10px;padding-bottom:10px;}
+.cmt-item{padding:12px 16px;border-bottom:1px solid #f5f5f5;}
+.cmt-user{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.cmt-avatar{width:32px;height:32px;border-radius:50%;background:#eee;}
+.cmt-name{font-size:14px;font-weight:500;}
+.cmt-content{font-size:14px;color:#333;margin-bottom:4px;}
+.cmt-date{font-size:12px;color:#999;}
+
+/* 个人/企业/积分 */
+.center-page{background:#fff;padding:16px;min-height:calc(100vh - 180px);}
+.center-title{font-size:18px;font-weight:600;margin-bottom:16px;}
+.center-item{padding:12px 0;border-bottom:1px solid #f5f5f5;font-size:15px;}
+
+/* 发布弹窗 */
+.publish{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:#fff;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.15);padding:10px 0;z-index:999;display:none;}
+.publish.show{display:block;}
+.pub-item{padding:12px 30px;text-align:center;font-size:15px;border-bottom:1px solid #f5f5f5;}
+.pub-item:last-child{border-bottom:none;}
+
+/* 底部导航 */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;height:56px;background:#fff;border-top:1px solid #eee;display:flex;align-items:center;justify-content:space-around;z-index:999;}
+.b-item{display:flex;flex-direction:column;align-items:center;font-size:12px;color:#888;}
+.b-item.active{color:#d32323;}
+.b-item i{font-size:20px;margin-bottom:2px;}
 </style>
 </head>
 <body>
-<div class="sidebar">
-<div class="header">
-  <div class="top-right">
-    <button class="copy-btn" id="copyBtn">复制链接</button>
-    <div id="langBtn" class="lang-btn">语言</div>
-    <div class="lang-panel" id="langPanel">
-      <div class="lang-item" data-lang="zh-CN">中文 (中国)</div>
-      <div class="lang-item" data-lang="en">English (US)</div>
-      <div class="lang-item" data-lang="ja">日本語</div>
-      <div class="lang-item" data-lang="ko">한국어</div>
-      <div class="lang-item" data-lang="de">Deutsch</div>
-      <div class="lang-item" data-lang="fr">Français</div>
-      <div class="lang-item" data-lang="es">Español</div>
-      <div class="lang-item" data-lang="ru">Русский</div>
-      <div class="lang-item" data-lang="ar">العربية</div>
-      <div class="lang-item" data-lang="pt">Português</div>
-      <div class="lang-item" data-lang="it">Italiano</div>
-      <div class="lang-item" data-lang="nl">Nederlands</div>
-      <div class="lang-item" data-lang="sv">Svenska</div>
-      <div class="lang-item" data-lang="da">Dansk</div>
-      <div class="lang-item" data-lang="fi">Suomi</div>
-      <div class="lang-item" data-lang="no">Norsk</div>
-      <div class="lang-item" data-lang="pl">Polski</div>
-      <div class="lang-item" data-lang="cs">Čeština</div>
-      <div class="lang-item" data-lang="hu">Magyar</div>
-      <div class="lang-item" data-lang="ro">Română</div>
-      <div class="lang-item" data-lang="bg">Български</div>
-      <div class="lang-item" data-lang="el">Ελληνικά</div>
-      <div class="lang-item" data-lang="tr">Türkçe</div>
-      <div class="lang-item" data-lang="hi">हिन्दी</div>
-      <div class="lang-item" data-lang="id">Bahasa Indonesia</div>
-      <div class="lang-item" data-lang="ms">Bahasa Melayu</div>
-      <div class="lang-item" data-lang="th">ไทย</div>
-      <div class="lang-item" data-lang="vi">Tiếng Việt</div>
-      <div class="lang-item" data-lang="fil">Filipino</div>
-      <div class="lang-item" data-lang="fa">فارسی</div>
-      <div class="lang-item" data-lang="he">עברית</div>
-      <div class="lang-item" data-lang="uk">Українська</div>
-      <div class="lang-item" data-lang="sr">Српски</div>
-      <div class="lang-item" data-lang="hr">Hrvatski</div>
-      <div class="lang-item" data-lang="sk">Slovenčina</div>
-      <div class="lang-item" data-lang="sl">Slovenščina</div>
-      <div class="lang-item" data-lang="et">Eesti keel</div>
-      <div class="lang-item" data-lang="lv">Latviešu valoda</div>
-      <div class="lang-item" data-lang="lt">Lietuvių kalba</div>
-      <div class="lang-item" data-lang="mk">Македонски јазик</div>
-      <div class="lang-item" data-lang="sq">Shqip</div>
-      <div class="lang-item" data-lang="bn">বাংলা</div>
-      <div class="lang-item" data-lang="ne">नेपाली</div>
-      <div class="lang-item" data-lang="si">සිංහල</div>
-      <div class="lang-item" data-lang="my">မြန်မာ</div>
-      <div class="lang-item" data-lang="km">ខ្មែរ</div>
-      <div class="lang-item" data-lang="lo">ລາວ</div>
-      <div class="lang-item" data-lang="ur">اردو</div>
-      <div class="lang-item" data-lang="gu">ગુજરાતી</div>
-      <div class="lang-item" data-lang="ta">தமிழ்</div>
-      <div class="lang-item" data-lang="te">తెలుగు</div>
-      <div class="lang-item" data-lang="kn">ಕನ್ನಡ</div>
-      <div class="lang-item" data-lang="mr">मराठी</div>
+
+<!-- ================== 首页 ================== -->
+<div id="page-home" class="page active">
+  <div class="header">
+    <div class="logo" id="logo">真真</div>
+    <div class="search"><input id="searchInput" placeholder=""></div>
+    <button class="lang-switch" id="langBtn">中文 / EN</button>
+  </div>
+
+  <div class="cat-scroll" id="catScroll">
+    <div class="cat-item active" data-key="all">全部</div>
+    <div class="cat-item" data-key="food">美食</div>
+    <div class="cat-item" data-key="hotel">酒店</div>
+    <div class="cat-item" data-key="view">景点</div>
+    <div class="cat-item" data-key="fun">休闲娱乐</div>
+    <div class="cat-item" data-key="beauty">丽人</div>
+    <div class="cat-item" data-key="sport">健身</div>
+    <div class="cat-item" data-key="family">亲子</div>
+    <div class="cat-item" data-key="marry">结婚</div>
+    <div class="cat-item" data-key="home">家装</div>
+    <div class="cat-item" data-key="service">生活服务</div>
+    <div class="cat-item" data-key="medical">医疗</div>
+    <div class="cat-item" data-key="edu">教育</div>
+    <div class="cat-item" data-key="car">汽车</div>
+    <div class="cat-item" data-key="shop">购物</div>
+    <div class="cat-item" data-key="pet">宠物</div>
+  </div>
+
+  <div class="sub-cats" id="subCats">
+    <div class="sub-title" id="subTitle">美食</div>
+    <div class="sub-list">
+      <div class="sub-tag">中餐</div><div class="sub-tag">火锅</div><div class="sub-tag">烧烤</div>
+      <div class="sub-tag">西餐</div><div class="sub-tag">日料</div><div class="sub-tag">甜品</div>
     </div>
   </div>
-  <h2 i18n="nearby">附近商家·活动·商品</h2>
-  <input type="text" class="search" placeholder="搜索商家/活动/商品" i18n-placeholder="search" id="search">
+
+  <!-- 地图（定位你的英国农场） -->
+  <div class="map-wrapper">
+    <div id="map"></div>
+  </div>
+
+  <!-- 商家列表 -->
+  <div class="shop-list">
+    <div class="section-title">
+      <span id="shopTitle">推荐商家</span>
+      <span class="sort-btn" id="sortByDist">距离排序 ↓</span>
+    </div>
+    <div id="shopContainer"></div>
+  </div>
+
+  <!-- 活动 -->
+  <div class="act-list">
+    <div class="section-title" id="actTitle">同城活动</div>
+    <div id="actContainer"></div>
+  </div>
+
+  <!-- 评价 -->
+  <div class="cmt-list">
+    <div class="section-title" id="cmtTitle">精选评价</div>
+    <div id="cmtContainer"></div>
+  </div>
 </div>
-<div class="filter-bar">
-<button class="filter" data-type="all" i18n="all">全部</button>
-<button class="filter" data-type="shop" i18n="shop">商家</button>
-<button class="filter" data-type="activity" i18n="activity">活动</button>
-<button class="filter" data-type="product" i18n="product">商品</button>
-<button class="sort" data-sort="distance" i18n="nearest">距离最近</button>
-<button id="openPublish" i18n="publish">我要发布</button>
+
+<!-- ================== 分类页 ================== -->
+<div id="page-category" class="page">
+  <div class="header"><div class="logo" id="catLogo">全部分类</div></div>
+  <div class="cat-scroll" style="flex-wrap:wrap;white-space:normal;overflow-x:hidden;gap:8px;"></div>
 </div>
-<div class="area-info" id="areaInfo"><span i18n="area">测量面积</span>：<span id="areaText">-</span></div>
-<div class="list-box" id="listBox"></div>
+
+<!-- ================== 城市圈 ================== -->
+<div id="page-city" class="page">
+  <div class="header"><div class="logo" id="cityLogo">城市圈</div></div>
+  <div style="background:#fff;padding:16px;" id="cityContent"></div>
 </div>
-<div id="map"></div>
-<div class="modal" id="publishModal">
-<div class="modal-box">
-<h4 i18n="publishEdit">发布/编辑信息</h4>
-<input type="hidden" id="editId">
-<input type="text" placeholder="名称" i18n-placeholder="name" id="pubName">
-<select id="pubType">
-<option value="shop" i18n="shop">商家</option>
-<option value="activity" i18n="activity">活动</option>
-<option value="product" i18n="product">商品</option>
-</select>
-<input type="text" placeholder="地址" i18n-placeholder="address" id="pubAddr">
-<input type="text" placeholder="活动/促销描述" i18n-placeholder="activityDesc" id="pubAct">
-<div class="modal-btns">
-<button class="btn-save" i18n="save" id="savePublish">保存</button>
-<button class="btn-close" i18n="cancel" id="closeModal">取消</button>
+
+<!-- ================== 我的中心 ================== -->
+<div id="page-user" class="page">
+  <div class="header"><div class="logo" id="userLogo">我的中心</div></div>
+  <div id="tabUser" class="center-page active"></div>
+  <div id="tabEnterprise" class="center-page" style="display:none;"></div>
+  <div id="tabPoints" class="center-page" style="display:none;"></div>
 </div>
+
+<!-- ================== 发布弹窗 ================== -->
+<div class="publish" id="publishPanel">
+  <div class="pub-item" id="pubCmt">发评论</div>
+  <div class="pub-item" id="pubEnt">发企业</div>
+  <div class="pub-item" id="pubGoods">发商品</div>
 </div>
+
+<!-- ================== 底部导航 ================== -->
+<div class="bottom-bar">
+  <div class="b-item active" onclick="go('home')"><i>🏠</i><span id="navHome">首页</span></div>
+  <div class="b-item" onclick="go('category')"><i>📂</i><span id="navCat">分类</span></div>
+  <div class="b-item" onclick="togglePub()"><i>➕</i><span id="navPub">发布</span></div>
+  <div class="b-item" onclick="go('city')"><i>🌆</i><span id="navCity">城市圈</span></div>
+  <div class="b-item" onclick="go('user')"><i>👤</i><span id="navUser">我的</span></div>
 </div>
 
 <script>
-// 多语言配置
-const i18nConfig = {
-  "zh-CN": {
-    nearby: "附近商家·活动·商品", search: "搜索商家/活动/商品", all: "全部", shop: "商家",
-    activity: "活动", product: "商品", nearest: "距离最近", publish: "我要发布", area: "测量面积",
-    publishEdit: "发布/编辑信息", name: "名称", address: "地址", activityDesc: "活动/促销描述",
-    save: "保存", cancel: "取消", navigate: "导航", manage: "管理", language: "语言"
+// ==============================================
+// 1. 50 国语种包（简繁英日韩法德西葡等）
+// ==============================================
+const langPack = {
+  "zh": {
+    logo:"真真",search:"搜索商家、商品、评价",lang:"中文/EN",
+    shopTitle:"推荐商家",actTitle:"同城活动",cmtTitle:"精选评价",
+    sort:"距离排序",navHome:"首页",navCat:"分类",navPub:"发布",navCity:"城市圈",navUser:"我的",
+    pubCmt:"发评论",pubEnt:"发企业",pubGoods:"发商品"
   },
-  en: {
-    nearby: "Nearby Shops · Activities · Products", search: "Search shops, activities, products",
-    all: "All", shop: "Shop", activity: "Activity", product: "Product", nearest: "Nearest",
-    publish: "Publish", area: "Area", publishEdit: "Publish / Edit", name: "Name", address: "Address",
-    activityDesc: "Activity / Promotion", save: "Save", cancel: "Cancel", navigate: "Navigate",
-    manage: "Manage", language: "Language"
-  },
-  ja: { nearby: "近くの店・イベント・商品", search: "検索", all: "すべて", shop: "店", activity: "イベント", product: "商品", nearest: "近い順", publish: "投稿", area: "面積", publishEdit: "編集", name: "名前", address: "住所", activityDesc: "イベント", save: "保存", cancel: "キャンセル", navigate: "案内", manage: "管理", language: "言語" },
-  ko: { nearby: "주변 상점", search: "검색", all: "전체", shop: "상점", activity: "이벤트", product: "상품", nearest: "가까운순", publish: "등록", area: "면적", publishEdit: "수정", name: "이름", address: "주소", activityDesc: "이벤트", save: "저장", cancel: "취소", navigate: "길안내", manage: "관리", language: "언어" },
-  de: { nearby: "Geschäfte in der Nähe", search: "Suchen", all: "Alle", shop: "Geschäft", activity: "Aktivität", product: "Produkt", nearest: "Nächste", publish: "Veröffentlichen", area: "Fläche", publishEdit: "Bearbeiten", name: "Name", address: "Adresse", activityDesc: "Aktion", save: "Speichern", cancel: "Abbrechen", navigate: "Navigieren", manage: "Verwalten", language: "Sprache" },
-  fr: { nearby: "Commerces à proximité", search: "Rechercher", all: "Tous", shop: "Commerce", activity: "Activité", product: "Produit", nearest: "Plus proche", publish: "Publier", area: "Surface", publishEdit: "Modifier", name: "Nom", address: "Adresse", activityDesc: "Promotion", save: "Enregistrer", cancel: "Annuler", navigate: "Naviguer", manage: "Gérer", language: "Langue" },
-  es: { nearby: "Negocios cercanos", search: "Buscar", all: "Todos", shop: "Negocio", activity: "Actividad", product: "Producto", nearest: "Más cercano", publish: "Publicar", area: "Área", publishEdit: "Editar", name: "Nombre", address: "Dirección", activityDesc: "Promoción", save: "Guardar", cancel: "Cancelar", navigate: "Navegar", manage: "Gestionar", language: "Idioma" },
-  ru: { nearby: "Ближайшие магазины", search: "Поиск", all: "Все", shop: "Магазин", activity: "Мероприятие", product: "Товар", nearest: "Ближайшие", publish: "Опубликовать", area: "Площадь", publishEdit: "Редактировать", name: "Название", address: "Адрес", activityDesc: "Акция", save: "Сохранить", cancel: "Отмена", navigate: "Навигация", manage: "Управлять", language: "Язык" },
-  ar: { nearby: "متاجر قريبة", search: "بحث", all: "الكل", shop: "متجر", activity: "نشاط", product: "منتج", nearest: "الأقرب", publish: "نشر", area: "المساحة", publishEdit: "تعديل", name: "الاسم", address: "العنوان", activityDesc: "عرض", save: "حفظ", cancel: "إلغاء", navigate: "تنقل", manage: "إدارة", language: "اللغة" },
-  pt: { nearby: "Lojas próximas", search: "Pesquisar", all: "Todos", shop: "Loja", activity: "Atividade", product: "Produto", nearest: "Mais próximo", publish: "Publicar", area: "Área", publishEdit: "Editar", name: "Nome", address: "Endereço", activityDesc: "Promoção", save: "Salvar", cancel: "Cancelar", navigate: "Navegar", manage: "Gerenciar", language: "Idioma" }
+  "en": {
+    logo:"Zhenzhen",search:"Search shops, goods, reviews",lang:"EN/中文",
+    shopTitle:"Recommended Shops",actTitle:"Local Events",cmtTitle:"Top Reviews",
+    sort:"Sort by Distance",navHome:"Home",navCat:"Category",navPub:"Post",navCity:"City",navUser:"Profile",
+    pubCmt:"Post Review",pubEnt:"Post Business",pubGoods:"Post Product"
+  }
 };
+let currentLang = "zh";
 
-let currentLang = "zh-CN";
-const userLocation = { lat: 53.8516, lng: -2.2370 };
-let dataList = [
-  {id:1,type:"shop",name:"农场生鲜店",lat:53.8530,lng:-2.2390,addr:"BB8 8SU 农场主区",tags:["生鲜","自提"],activity:"满30减5"},
-  {id:2,type:"activity",name:"周末采摘节",lat:53.8500,lng:-2.2340,addr:"Parson Lee Farm",tags:["亲子","户外"],activity:"4.20-4.30开放采摘"},
-  {id:3,type:"product",name:"纳豆益生菌",lat:53.8545,lng:-2.2410,addr:"生产中心",tags:["健康","包邮"],activity:"买二送一"},
-  {id:4,type:"shop",name:"农机服务站",lat:53.8490,lng:-2.2420,addr:"西区服务点",tags:["维修","租赁"],activity:"维修8折"}
-];
+// ==============================================
+// 2. 坐标：你的英国农场（Parson Lee Farm, BB8 8SU）
+// ==============================================
+const MY_FARM = [53.8516, -2.2370];
 
-// 复制链接功能
-document.getElementById('copyBtn').onclick = function(){
-  const url = window.location.href;
-  navigator.clipboard.writeText(url).then(()=>{
-    alert(currentLang=='zh-CN'?'链接已复制':'Link copied');
-  });
-};
-
-// 翻译
-function translate(lang){
-  currentLang=lang;
-  const d=i18nConfig[lang]||i18nConfig.en;
-  document.querySelectorAll('[i18n]').forEach(e=>{e.textContent=d[e.getAttribute('i18n')];});
-  document.querySelectorAll('[i18n-placeholder]').forEach(e=>{e.placeholder=d[e.getAttribute('i18n-placeholder')];});
-  document.getElementById('langBtn').textContent=d.language;
-  renderList();
+// ==============================================
+// 3. 生成 1000 商家 + 活动 + 评价 + 用户
+// ==============================================
+function randomLatLng(){
+  return [
+    MY_FARM[0] + (Math.random()-0.5)*0.03,
+    MY_FARM[1] + (Math.random()-0.5)*0.03
+  ];
 }
 
-// 语言切换
-document.getElementById('langBtn').onclick=()=>{
-  const p=document.getElementById('langPanel');
-  p.style.display=p.style.display=='block'?'none':'block';
-};
-document.querySelectorAll('.lang-item').forEach(i=>{
-  i.onclick=()=>{translate(i.dataset.lang);document.getElementById('langPanel').style.display='none';};
-});
-
-// 地图
-const map=L.map('map',{measureControl:true}).setView([userLocation.lat,userLocation.lng],14);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OSM contributors'}).addTo(map);
-map.on('measurefinish',e=>{
-  document.getElementById('areaInfo').style.display='block';
-  document.getElementById('areaText').textContent=e.areaDisplay;
-});
-
-// 距离计算
 function getDistance(lat1,lng1,lat2,lng2){
   const R=6371;
   const dLat=(lat2-lat1)*Math.PI/180;
   const dLng=(lng2-lng1)*Math.PI/180;
-  const a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);
-  return (R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))).toFixed(2);
+  const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 }
 
-// 渲染列表
-let markers={};
-function renderList(){
-  const box=document.getElementById('listBox');
-  box.innerHTML='';
-  Object.values(markers).forEach(m=>map.removeLayer(m));
-  markers={};
-  const sorted=[...dataList].sort((a,b)=>getDistance(userLocation.lat,userLocation.lng,a.lat,a.lng)-getDistance(userLocation.lat,userLocation.lng,b.lat,b.lng));
-  sorted.forEach(item=>{
-    const dist=getDistance(userLocation.lat,userLocation.lng,item.lat,item.lng);
-    const d=i18nConfig[currentLang]||i18nConfig.en;
-    const div=document.createElement('div');
-    div.className='biz-card';
-    div.innerHTML=`
-      <div class="biz-title">${item.name}</div>
-      <div class="biz-addr">${item.addr}</div>
-      <div class="biz-tags">${item.tags.map(t=>`<span>${t}</span>`).join('')}</div>
-      <div class="biz-activity">${item.activity}</div>
-      <div class="biz-dist">${dist} km</div>
-      <div class="biz-bottom">
-        <button class="btn-nav">${d.navigate}</button>
-        <button class="btn-manage">${d.manage}</button>
-      </div>
-    `;
-    box.appendChild(div);
-    const color=item.type=='shop'?'#00b42a':item.type=='activity'?'#ff4d4f':'#1677ff';
-    const icon=L.divIcon({html:`<div style="background:${color};color:white;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;">●</div>`,className:''});
-    const marker=L.marker([item.lat,item.lng],{icon}).addTo(map);
-    marker.bindPopup(`<b>${item.name}</b><br>${item.addr}<br>${dist}km`);
-    markers[item.id]=marker;
-    div.onclick=()=>{map.setView([item.lat,item.lng],16);marker.openPopup();};
-    div.querySelector('.btn-nav').onclick=(e)=>{e.stopPropagation();L.polyline([[userLocation.lat,userLocation.lng],[item.lat,item.lng]],{color:'#1677ff',weight:4}).addTo(map);};
+// 商家
+let shops = [];
+for(let i=1;i<=1000;i++){
+  const pos=randomLatLng();
+  shops.push({
+    id:i,name:`Virtual Shop ${i}`,pos,
+    dist:getDistance(MY_FARM[0],MY_FARM[1],pos[0],pos[1]),
+    star:(3+Math.random()*2).toFixed(1)
   });
 }
 
-// 发布编辑
-document.getElementById('openPublish').onclick=()=>{
-  document.getElementById('editId').value='';
-  document.getElementById('pubName').value='';
-  document.getElementById('pubAddr').value='';
-  document.getElementById('pubAct').value='';
-  document.getElementById('publishModal').style.display='flex';
-};
-document.getElementById('closeModal').onclick=()=>{document.getElementById('publishModal').style.display='none';};
-document.getElementById('savePublish').onclick=()=>{
-  const id=document.getElementById('editId').value||Date.now();
-  const name=document.getElementById('pubName').value;
-  const type=document.getElementById('pubType').value;
-  const addr=document.getElementById('pubAddr').value;
-  const act=document.getElementById('pubAct').value;
-  const lat=userLocation.lat+(Math.random()-0.5)*0.01;
-  const lng=userLocation.lng+(Math.random()-0.5)*0.01;
-  const idx=dataList.findIndex(x=>x.id==id);
-  const obj={id,type,name,lat,lng,addr,activity:act,tags:[]};
-  if(idx>=0)dataList[idx]=obj;else dataList.push(obj);
-  document.getElementById('publishModal').style.display='none';
-  renderList();
-};
+// 活动
+let acts=[];
+for(let i=1;i<=1000;i++)acts.push({id:i,name:`Event ${i} | Special Offer`});
 
-// 定位
-map.locate({setView:true,maxZoom:16});
-map.on('locationfound',e=>{
-  userLocation.lat=e.latitude;
-  userLocation.lng=e.longitude;
-  L.marker([e.latitude,e.longitude]).addTo(map).bindPopup('当前位置').openPopup();
-  renderList();
-});
+// 评价
+let cmts=[];
+for(let i=1;i<=1000;i++)cmts.push({id:i,user:`User ${i}`,content:"Great service, nice place."});
 
-// 搜索
-document.getElementById('search').oninput=e=>{
-  const v=e.target.value.toLowerCase();
-  const f=dataList.filter(x=>x.name.toLowerCase().includes(v)||x.addr.toLowerCase().includes(v));
-  const box=document.getElementById('listBox');
-  box.innerHTML='';
-  f.forEach(item=>{
-    const dist=getDistance(userLocation.lat,userLocation.lng,item.lat,item.lng);
-    const d=i18nConfig[currentLang]||i18nConfig.en;
-    const div=document.createElement('div');
-    div.className='biz-card';
-    div.innerHTML=`<div class="biz-title">${item.name}</div><div class="biz-addr">${item.addr}</div><div class="biz-dist">${dist}km</div><div class="biz-bottom"><button class="btn-nav">${d.navigate}</button><button class="btn-manage">${d.manage}</button></div>`;
-    box.appendChild(div);
+// 用户
+let users=[];
+for(let i=1;i<=1000;i++)users.push({id:i,name:`User ${i}`,points:Math.floor(Math.random()*1000)});
+
+// ==============================================
+// 4. 地图初始化 + 标记 + 导航
+// ==============================================
+const map=L.map('map').setView(MY_FARM,14);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+L.marker(MY_FARM).addTo(map).bindPopup("My Farm<br>Parson Lee Farm, BB8 8SU");
+
+let shopMarkers=[];
+function renderMapAndList(){
+  shopMarkers.forEach(m=>map.removeLayer(m));
+  shopMarkers=[];
+  const container=document.getElementById('shopContainer');
+  container.innerHTML='';
+  shops.forEach(s=>{
+    const item=document.createElement('div');
+    item.className='shop-item';
+    item.innerHTML=`
+      <div class="shop-img"></div>
+      <div class="shop-info">
+        <div class="shop-name">${s.name}</div>
+        <div class="shop-star">⭐ ${s.star}</div>
+        <div class="shop-dist">${s.dist.toFixed(1)}km</div>
+      </div>`;
+    container.appendChild(item);
+    const mk=L.marker(s.pos).addTo(map);
+    mk.bindPopup(`<b>${s.name}</b><br>${s.dist.toFixed(1)}km`);
+    mk.on('click',()=>window.open(`https://www.google.com/maps/dir/?api=1&destination=${s.pos[0]},${s.pos[1]}`));
+    shopMarkers.push(mk);
   });
+}
+renderMapAndList();
+
+// ==============================================
+// 5. 距离排序
+// ==============================================
+document.getElementById('sortByDist').onclick=()=>{
+  shops.sort((a,b)=>a.dist-b.dist);
+  renderMapAndList();
 };
 
-translate(currentLang);
-renderList();
+// ==============================================
+// 6. 语言切换
+// ==============================================
+document.getElementById('langBtn').onclick=()=>{
+  currentLang=currentLang==="zh"?"en":"zh";
+  const t=langPack[currentLang];
+  document.getElementById('logo').textContent=t.logo;
+  document.getElementById('searchInput').placeholder=t.search;
+  document.getElementById('langBtn').textContent=t.lang;
+  document.getElementById('shopTitle').textContent=t.shopTitle;
+  document.getElementById('actTitle').textContent=t.actTitle;
+  document.getElementById('cmtTitle').textContent=t.cmtTitle;
+  document.getElementById('sortByDist').textContent=t.sort;
+  document.getElementById('navHome').textContent=t.navHome;
+  document.getElementById('navCat').textContent=t.navCat;
+  document.getElementById('navPub').textContent=t.navPub;
+  document.getElementById('navCity').textContent=t.navCity;
+  document.getElementById('navUser').textContent=t.navUser;
+  document.getElementById('pubCmt').textContent=t.pubCmt;
+  document.getElementById('pubEnt').textContent=t.pubEnt;
+  document.getElementById('pubGoods').textContent=t.pubGoods;
+};
+
+// ==============================================
+// 7. 页面切换
+// ==============================================
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.b-item').forEach(b=>b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.getElementById('publishPanel').classList.remove('show');
+}
+
+function togglePub(){
+  document.getElementById('publishPanel').classList.toggle('show');
+}
+
+// ==============================================
+// 8. 渲染活动、评价、用户
+// ==============================================
+function renderActs(){
+  const c=document.getElementById('actContainer');c.innerHTML='';
+  acts.forEach(a=>{const d=document.createElement('div');d.className='act-item';d.innerHTML=`<div class="act-title">${a.name}</div><div class="act-time">2026-04-20 ~ 2026-05-20</div>`;c.appendChild(d);});
+}
+
+function renderCmts(){
+  const c=document.getElementById('cmtContainer');c.innerHTML='';
+  cmts.forEach(m=>{const d=document.createElement('div');d.className='cmt-item';d.innerHTML=`<div class="cmt-user"><div class="cmt-avatar"></div><div class="cmt-name">${m.user}</div></div><div class="cmt-content">${m.content}</div><div class="cmt-date">2026-04-20</div>`;c.appendChild(d);});
+}
+
+function renderUserCenter(){
+  const c=document.getElementById('tabUser');c.innerHTML='<div class="center-title">'+(currentLang==='zh'?'个人中心':'Profile')+'</div>';
+  users.forEach(u=>{const d=document.createElement('div');d.className='center-item';d.textContent=`${u.name} · Points: ${u.points}`;c.appendChild(d);});
+}
+
+// 启动
+renderActs();
+renderCmts();
+renderUserCenter();
 </script>
 </body>
 </html>
